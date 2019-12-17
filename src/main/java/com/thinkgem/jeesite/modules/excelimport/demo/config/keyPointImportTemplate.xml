@@ -1,0 +1,56 @@
+<!--所用到的标签格式 配置说明
+<template>
+    <contents>
+        <content id="标签id" mergeCellOrNot="是否跨列true false" class="类名称" headType="excel头类型 模板=1或数据=2"
+        headerRowNo="预留的空行数量" headerPropertyRowType="列名称和列名称对应的属性值是否在同一行 当前行=20 下一行=21">
+            如果headerNames中存在通用配置 即全部的headerName都是同一行为列名称且连续 使用通用配置 headerNameBegRow 和 headerNameBegCol
+            否则每个headerName 不连续 则需要单独配置
+            <headerNames id="标签id" headerNameBegRow="每一个headerName标签 在当前行=20 下一行=21" headerNameBegCol="每一个headerName标签开始的列数">
+                <headerName name="表头名称" begRow="当前行或者下一行" begCol="开始的列数"/>
+            </headerNames>
+            <properties id="标签id" propertyValBegRow="每一个property的值 在当前行=20 下一行=21" propertyValBegCol="每一个property的值开始的列数"/>
+        </content>
+    </contents>
+</template>
+-->
+
+<template>
+    <contents >
+        <!--项目信息-->
+        <content id="1" mergeCellOrNot="true" class="com.thinkgem.jeesite.modules.excelimport.demo.depenency.PsJHKeypointExamine"  headType="1" headerRowNo="0" headerPropertyRowType="20">
+            <headerNames id="1" >
+                <headerName name="项目名称" begRow="20" begCol="0" headerMeaning="10"/>
+                <headerName name="主管部门" begRow="20" begCol="6" headerMeaning="10"/>
+                <headerName name="项目承担单位" begRow="20" begCol="14" headerMeaning="10"/>
+            </headerNames>
+            <properties id="1" >
+                <property name="projectName" DefaultValue="" begRow="20" begCol="2"/>
+                <property name="administration" DefaultValue="" begRow="20" begCol="8"/>
+                <property name="organizationP" DefaultValue="" begRow="20" begCol="16"/>
+            </properties>
+        </content>
+
+        <content id="2" mergeCellOrNot="true" class="com.thinkgem.jeesite.modules.excelimport.demo.depenency.PsJHKeypointExamine" headType="2" headerRowNo="2"  headerPropertyRowType="21">
+            <headerNames id="2">
+                <headerName name="研究周期"  begCol="0" begRow="20"  />
+                <headerName name="节点名称"  begCol="1" begRow="20" />
+                <headerName name="节点内容"  begCol="6" begRow="20" />
+                <headerName name="完成时间"  begCol="12" begRow="20" />
+                <headerName name="主持部门/单位"  begCol="14" begRow="20" />
+                <headerName name="检查形式"  begCol="17" begRow="20" />
+                <headerName name="需要提交的材料和实物清单"  begCol="20" begRow="20"  />
+                <headerName name="状态"  begCol="23" begRow="20" />
+            </headerNames>
+            <properties id="2" >
+                <property name="researchCycle" DefaultValue="--" begRow="21"  begCol="0"/>
+                <property name="pointName" DefaultValue="--" begRow="21" begCol="1"/>
+                <property name="pointContent" DefaultValue="--" begRow="21" begCol="6"/>
+                <property name="finishDateStr" DefaultValue="--" begRow="21" begCol="12"/>
+                <property name="organization" DefaultValue="--" begRow="21"  begCol="14"/>
+                <property name="inspectionPattern" DefaultValue="--" begRow="21"  begCol="17"/>
+                <property name="detailedList" DefaultValue="--" begRow="21" begCol="20"/>
+                <property name="status" DefaultValue="--" begRow="21" begCol="23"/>
+            </properties>
+        </content>
+    </contents>
+</template>
