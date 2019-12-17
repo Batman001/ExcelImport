@@ -37,18 +37,18 @@ public class EntityImport implements ObjectImportExcel {
     /**
      * 基类配置属性 Excel错误详细信息
      */
-    protected StringWriter errMsgs = new StringWriter();
+    private StringWriter errMsgs = new StringWriter();
 
     /**
      * 通过调用jeesite平台的importExcel的方法进行解析 引入importExcelWrapper属性
      */
-    protected ImportExcelWrapper importExcelWrapper = SpringContextHolder.getBean(ImportExcelWrapper.class);
+    private ImportExcelWrapper importExcelWrapper = SpringContextHolder.getBean(ImportExcelWrapper.class);
 
 
-    protected ExcelImportService excelService = SpringContextHolder.getBean(ExcelImportService.class);
+    private ExcelImportService excelService = SpringContextHolder.getBean(ExcelImportService.class);
 
 
-    protected List<ExcelAssistantBase> excelModelConfig = null;
+    private List<ExcelAssistantBase> excelModelConfig = null;
 
     /**
      * 线程安全的文件上传进度的MonitorId
@@ -75,31 +75,28 @@ public class EntityImport implements ObjectImportExcel {
     /**
      * 解析Excel过程错误信息存储map
      */
-    protected Map<Integer, String> errorMsgMap;
+    private Map<Integer, String> errorMsgMap;
 
     /**
      * 为了对错误信息进行收集 设置的exportExcel属性
      */
-    protected ExportExcel exportExcel;
+    private ExportExcel exportExcel;
 
     /**
      * Excel导入过程中 错误数据 TYPE_COMMON Header模板表头
      */
-    protected String[] commonPropertyStr;
+    private String[] commonPropertyStr;
 
     /**
      * Excel导入过程中 错误数据 TYPE_CONTENT header模板表头
      */
-    protected String[] contentPropertyStr;
+    private String[] contentPropertyStr;
 
 
     /*===============================构造函数以及getter setter方法===============================*/
 
     public EntityImport(){}
 
-    public String getMonitorId() {
-        return monitorId;
-    }
 
     public String getProgress() {
         return progress;
@@ -178,6 +175,7 @@ public class EntityImport implements ObjectImportExcel {
         // 通过configProcess得到复杂模板的headerNo
         progress = "初始化Excel模板中...";
         ProgressSingleton.put(this.monitorId, progress);
+
         int headerRowNo = excelModelConfig.get(0).getHeaderRowNo();
 
         importExcelWrapper.init(files.get(0), headerRowNo, 0);
@@ -239,13 +237,14 @@ public class EntityImport implements ObjectImportExcel {
 
     /**
      * 解析过程中处理错误信息 并将错误信息写入本地服务器磁盘
-     *
      * @param errorFilePath 错误信息收集文件名称
+     * @param errorMsgMap 校验策略出错信息map
      * @return 返回信息
      * @throws IOException 写入本地的IO异常处理
      */
     @Override
-    public Map<String,Object> errorInfoProcess(String errorFilePath) throws IOException {
+    public Map<String,Object> errorInfoProcess(String errorFilePath, Map<Integer, String> errorMsgMap) throws IOException {
+
         if(errorMsgMap == null) {
             progress = "导入数据校验存在错误，正在收集异常数据...";
             ProgressSingleton.put(this.monitorId, progress);
@@ -295,7 +294,7 @@ public class EntityImport implements ObjectImportExcel {
 
                 }
             }
-            // TYPE_CONTENT
+            // TYPE_CONTENT 通过判断errorMsgMap中key为1的value信息 获取校验的错误类型
             else {
                 errorMsgMap.remove(0);
                 if(exportExcel == null) {
@@ -316,7 +315,6 @@ public class EntityImport implements ObjectImportExcel {
 
                 }
             }
-
             // 使用文件流写入文件
             FileOutputStream fos;
             try {
@@ -368,7 +366,7 @@ public class EntityImport implements ObjectImportExcel {
             return postRes;
         }
 
-        return errorInfoProcess(errorFilePath);
+        return errorInfoProcess(errorFilePath, errorMsgMap);
 
     }
 

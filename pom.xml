@@ -945,6 +945,13 @@
 				<version>2.10</version>
 			</plugin>
 		</plugins>
+
+		<!--添加excelimport 配置文件的路径信息-->
+		<resources>
+			<resource>
+				<directory>src/main/java/com/thinkgem/jeesite/modules/excelimport/demo/config</directory>
+			</resource>
+		</resources>
 	</build>
 	
 	<profiles>

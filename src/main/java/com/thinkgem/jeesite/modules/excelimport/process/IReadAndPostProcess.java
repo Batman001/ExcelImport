@@ -28,6 +28,10 @@ public interface IReadAndPostProcess {
      * @throws Exception 抛出异常信息
      */
     boolean justifyDataList(List<Object> dataList, Map<Integer, String> errorMsgMap, int begRow, boolean isHeaderOrNot) throws Exception;
+
+
+//    boolean justifyDetailDataList();
+
     /**
      * 保存方法
      * @param objList 将解析后的Excel数据保存接口方法

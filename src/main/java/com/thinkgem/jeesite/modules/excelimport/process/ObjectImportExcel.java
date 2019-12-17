@@ -42,10 +42,11 @@ public interface ObjectImportExcel {
     /**
      * 解析过程中处理错误信息 并将错误信息写入本地服务器磁盘
      * @param filePath 错误信息收集文件名称
+     * @param errorMsgMap 校验策略出错信息map
      * @return 返回信息
      * @throws IOException 写入本地的IO异常处理
      */
-    Map<String,Object> errorInfoProcess(String filePath) throws IOException;
+    Map<String,Object> errorInfoProcess(String filePath, Map<Integer, String> errorMsgMap) throws IOException;
 
     /**
      * 初始化 抽象 BaseExcel方法

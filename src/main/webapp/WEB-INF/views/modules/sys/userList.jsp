@@ -5,6 +5,38 @@
 	<title>用户管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
+		jQuery(function($) {
+			$("#btn-Import").click(function () {
+				$.ajax({
+					// 关键节点配置检查文件配置信息代码
+					url: "${ctx}/import/getThread?type=PsJHKeypointExamine&businessId=6",
+					success: function (result) {
+						console.log(result)
+						var form = new FormData($("#importForm ")[0]);
+						$.ajax({
+							url: "${ctx}/import/import",
+							type: "post",
+							data: form,
+							dataType: "json",
+							processData: false,
+							contentType: false,
+							async: false,
+							success: function (data) {
+								var state = data.state;
+								if (state == 21 || state == '21'){
+									var url = "${ctxStatic}/errorfile/"+data.detail;
+									location.href=url;
+								}
+							}
+						});
+
+					}
+				});
+			});
+		});
+
+
+
 		$(document).ready(function() {
 			$("#btnExport").click(function(){
 				top.$.jBox.confirm("确认要导出用户数据吗？","系统提示",function(v,h,f){
@@ -19,6 +51,7 @@
 				$.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
 					bottomText:"导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"});
 			});
+
 		});
 		function page(n,s){
 			if(n) $("#pageNo").val(n);
@@ -30,11 +63,11 @@
 	</script>
 </head>
 <body>
-	<div id="importBox" class="hide">
-		<form id="importForm" action="${ctx}/sys/user/import" method="post" enctype="multipart/form-data"
+	<div id="importBox">
+		<form id="importForm"  method="post" enctype="multipart/form-data"
 			class="form-search" style="padding-left:20px;text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
 			<input id="uploadFile" name="file" type="file" style="width:330px"/><br/><br/>　　
-			<input id="btnImportSubmit" class="btn btn-primary" type="submit" value="   导    入   "/>
+			<a id="btn-Import" class="btn btn-sm btn-success" type="button">测试 ImportExcel.Jar包 导入</a>
 			<a href="${ctx}/sys/user/import/template">下载模板</a>
 		</form>
 	</div>

@@ -8,6 +8,7 @@ import com.thinkgem.jeesite.modules.excelimport.process.IReadAndPostProcess;
 import com.thinkgem.jeesite.modules.excelimport.util.ConstEntityExcelHelper;
 import com.thinkgem.jeesite.modules.excelimport.util.ExcelImportService;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.slf4j.Logger;
@@ -93,6 +94,8 @@ public class ImportExcelWrapper extends ImportExcel {
 	 * @return  excel 返回经过当前读取处理后 目前所在的行数
 	 */
 	private int getDataList(List<ExcelAssistantBase> excelModelConfig, StringWriter sw) {
+		// 获得本次Excel导入模板的标题行
+		int headerNum = excelModelConfig.get(0).headerRowNo;
 		int size = excelModelConfig.size();
 		boolean errorOrNot = false;
 		if(size <= 0) {
@@ -166,11 +169,11 @@ public class ImportExcelWrapper extends ImportExcel {
 			}
 			//导入实体类数据部分处理
 			else if(headerType == ConstEntityExcelHelper.TYPE_CONTENT) {
-				// contentCnt值为-1 则说明数据的个数不确定，需要进行特殊处理 （并且需要保证从改行的下一行开始后面全部为数据行）
+				// contentCnt值为-1 则说明数据的个数不确定，需要进行特殊处理 （并且需要保证从该行的下一行开始后面全部为数据行）
 				if(contentCnt == -1) {
 					// 使用 totalRow 计算得到数据的行数 - curRow 作为数据的行数
 					int totalRow = this.getLastDataRowNum();
-					contentCnt = totalRow - curRow - 1;
+					contentCnt = totalRow - curRow - headerNum;
 				}
 				//验证表头正确性
 				if(!this.justifyHeader(eaBase, curRow, curCol,sw)) {
@@ -356,6 +359,9 @@ public class ImportExcelWrapper extends ImportExcel {
 		// 如果TYPE_CONTENT数据校验过程出错 说明TYPE_COMMON 数据校验通过 因此errorMsgMap中只保留TYPE_CONTENT的出错信息
 		Map<Integer,String> errorMsgMap = new HashMap<>(8);
 
+		// 用于存储Excel校验过程中出错详细信息(具体到单元格级别) 用于将错误备注信息在原始文件中显示出来
+		Map<Cell, String> errorMsgDetail = new HashMap<>(8);
+
 		// 设置校验是否通过的标记flag
 		boolean flag = true;
 
@@ -381,6 +387,7 @@ public class ImportExcelWrapper extends ImportExcel {
 						start = System.currentTimeMillis();
 						// 对Excel数据进行校验 并将出错信息写入errorMegMap
 						flag = postProcessor.justifyDataList(bodyList, errorMsgMap, begRow, isHeaderOrNot);
+
 						end = System.currentTimeMillis();
 						logger.info("对 [{}] 条 [{}] 数据完成校验，消耗时间为 : [{}] ms",
 								bodyList.size(), bodyList.get(0).getClass().toString(), end - start );

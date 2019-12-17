@@ -96,6 +96,8 @@ public class ExcelImportService {
         if(toSheet == null  || errorMsgMap == null || errorRowNos == null) {
             return false;
         }
+        // 由于错误数据存在 错误数据标题行（rowNo=0) + 出错行数与出错原因(rowNo=1) 两行
+        // 因此导出错误数据时从第三行开始 即 begRow=2
         int begRow=2;
         for(int index=0; index<errorRowNos.size(); index++) {
             Row row = toSheet.createRow(begRow);
