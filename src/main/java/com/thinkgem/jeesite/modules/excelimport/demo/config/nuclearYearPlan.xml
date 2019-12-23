@@ -17,12 +17,26 @@
 <template>
     <contents >
         <!--项目信息-->
-        <content id="1" mergeCellOrNot="true" class="com.thinkgem.jeesite.modules.excelimport.demo.depenency.PsJHKeypointExamine"
-                 headType="1" headerRowNo="0" headerPropertyRowType="20">
+        <content id="1" mergeCellOrNot="true" class="com.thinkgem.jeesite.modules.excelimport.demo.depenency.PsJHNuclearYearplan"
+                 headType="1" headerRowNo="2" headerPropertyRowType="21">
             <headerNames id="1" >
-                <headerName name="项目名称" begRow="20" begCol="0" headerMeaning="10"/>
-                <headerName name="主管部门" begRow="20" begCol="6" headerMeaning="10"/>
-                <headerName name="项目承担单位" begRow="20" begCol="14" headerMeaning="10"/>
+                <headerName name="序号" begRow="20" begCol="0"/>
+                <headerName name="类别" begRow="20" begCol="6" />
+                <headerName name="项目名称" begRow="20" begCol="14"/>
+                <headerName name="总体目标" begRow="20" begCol="14"/>
+                <headerName name="主要工作内容" begRow="20" begCol="14"/>
+                <headerName name="负责单位" begRow="20" begCol="14"/>
+                <headerName name="主要承担单位" begRow="20" begCol="14"/>
+                <headerName name="研究周期" begRow="20" begCol="14"/>
+                <headerName name="小计" begRow="20" begCol="14"/>
+                <headerName name="集团集中" begRow="20" begCol="14"/>
+                <headerName name="单位自筹（含获得国拨资金）" begRow="20" begCol="14"/>
+                <headerName name="其他" begRow="20" begCol="14"/>
+                <headerName name="集团集中" begRow="20" begCol="14"/>
+                <headerName name="集团自筹" begRow="20" begCol="14"/>
+                <headerName name="集团集中" begRow="20" begCol="14"/>
+
+
             </headerNames>
             <properties id="1" >
                 <property name="projectName" DefaultValue="" begRow="20" begCol="2"/>
@@ -31,8 +45,8 @@
             </properties>
         </content>
 
-        <content id="2" mergeCellOrNot="true" class="com.thinkgem.jeesite.modules.excelimport.demo.depenency.PsJHKeypointExamine"
-                 headType="2" headerRowNo="2" headerPropertyRowType="23">
+        <content id="2" mergeCellOrNot="true" class="com.thinkgem.jeesite.modules.excelimport.demo.depenency.PsJHNuclearYearplan"
+                 headType="2" headerRowNo="2"  headerPropertyRowType="21">
             <headerNames id="2">
                 <headerName name="研究周期"  begCol="0" begRow="20"  />
                 <headerName name="节点名称"  begCol="1" begRow="20" />
@@ -44,14 +58,14 @@
                 <headerName name="状态"  begCol="23" begRow="20" />
             </headerNames>
             <properties id="2" >
-                <property name="researchCycle" DefaultValue="--" begRow="23"  begCol="0"/>
-                <property name="pointName" DefaultValue="--" begRow="23" begCol="1"/>
-                <property name="pointContent" DefaultValue="--" begRow="23" begCol="6"/>
-                <property name="finishDateStr" DefaultValue="--" begRow="23" begCol="12"/>
-                <property name="organization" DefaultValue="--" begRow="23"  begCol="14"/>
-                <property name="inspectionPattern" DefaultValue="--" begRow="23"  begCol="17"/>
-                <property name="detailedList" DefaultValue="--" begRow="23" begCol="20"/>
-                <property name="status" DefaultValue="--" begRow="23" begCol="23"/>
+                <property name="researchCycle" DefaultValue="--" begRow="21"  begCol="0"/>
+                <property name="pointName" DefaultValue="--" begRow="21" begCol="1"/>
+                <property name="pointContent" DefaultValue="--" begRow="21" begCol="6"/>
+                <property name="finishDateStr" DefaultValue="--" begRow="21" begCol="12"/>
+                <property name="organization" DefaultValue="--" begRow="21"  begCol="14"/>
+                <property name="inspectionPattern" DefaultValue="--" begRow="21"  begCol="17"/>
+                <property name="detailedList" DefaultValue="--" begRow="21" begCol="20"/>
+                <property name="status" DefaultValue="--" begRow="21" begCol="23"/>
             </properties>
         </content>
     </contents>

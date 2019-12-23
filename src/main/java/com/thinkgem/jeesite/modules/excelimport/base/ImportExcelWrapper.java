@@ -123,7 +123,7 @@ public class ImportExcelWrapper extends ImportExcel {
 			// 将TYPE_COMMON的header进行封装成DataList
 			if(headerType == ConstEntityExcelHelper.TYPE_COMMON) {
 				rowStep = 1;
-				if(!this.justifyHeader(eaBase, curRow, curCol,sw)) {
+				if(!this.justifyHeader(eaBase, curRow, curCol, sw)) {
 					return -1;
 				}
 				if(eaBase.getHeaderPropertyRowType() == ConstEntityExcelHelper.ROW_TYPE_NEXT) {
@@ -173,15 +173,20 @@ public class ImportExcelWrapper extends ImportExcel {
 				if(contentCnt == -1) {
 					// 使用 totalRow 计算得到数据的行数 - curRow 作为数据的行数
 					int totalRow = this.getLastDataRowNum();
-					contentCnt = totalRow - curRow - headerNum;
+					// 调整功能 使得可以满足 数据从指定的行数开始读取(可以保证从下两行开始读取)
+					int startPropertyRow = eaBase.getHeaderPropertyRowType() - ConstEntityExcelHelper.ROW_TYPE_NEXT;
+					contentCnt = totalRow - curRow - headerNum - startPropertyRow;
 				}
 				//验证表头正确性
 				if(!this.justifyHeader(eaBase, curRow, curCol,sw)) {
 					return -1;
 				}
-				if(eaBase.getHeaderPropertyRowType() == ConstEntityExcelHelper.ROW_TYPE_NEXT) {
-					curRow++;
+
+				if(eaBase.getHeaderPropertyRowType() >= ConstEntityExcelHelper.ROW_TYPE_NEXT) {
+					int rowNextStep = eaBase.getHeaderPropertyRowType() - ConstEntityExcelHelper.ROW_TYPE_NEXT + 1;
+					curRow += rowNextStep;
 				}
+
 				eaBase.setHeaderRowNo(curRow);
 				List<Object> tmpList = this.getDataList(eaBase.getClz(), eaBase, curRow, contentCnt);
 				//将数据个数恢复为默认值1

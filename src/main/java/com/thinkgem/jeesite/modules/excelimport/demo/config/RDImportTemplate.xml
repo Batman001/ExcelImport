@@ -91,7 +91,7 @@
                 <property name="sendU" DefaultValue="--"  />
                 <property name="u" DefaultValue="--"  />
                 <property name="metalDifference" DefaultValue="--"  />
-                <property name="difference" DefaultValue="--" />
+                <property name="difference" DefaultValue="--"  />
             </properties>
         </content>
 
